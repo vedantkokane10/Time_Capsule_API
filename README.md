@@ -185,4 +185,100 @@ Example live route:
 4. Push to the branch (`git push origin feature/new-feature`)
 5. Open a Pull Request
 
+------
+
+## 🧪 Using the API with Postman
+
+Here's how you can test the Time Capsule API using [Postman](https://www.postman.com/):
+
+### 1. Register a New User
+
+- **Method:** `POST`
+- **URL:** `http://13.234.57.74:8000/auth/register`
+- **Body (JSON):**
+```json
+{
+  "email": "testNew@gmail.com",
+  "password": "test123"
+}
+```
+
+---
+
+### 2. Login to Get JWT Token
+
+- **Method:** `POST`
+- **URL:** `http://13.234.57.74:8000/auth/login`
+- **Body (JSON):**
+```json
+{
+  "email": "testNew@gmail.com",
+  "password": "test123"
+}
+```
+
+- ✅ Copy the `accessToken` from the response.
+
+---
+
+### 3. Set Authorization Header in Postman
+
+- Go to the **Headers** tab.
+- Add:
+  ```
+  Key: Authorization
+  Value: Bearer <your_access_token>
+  ```
+
+---
+
+### 4. Create a Capsule
+
+- **Method:** `POST`
+- **URL:** `http://13.234.57.74:8000/capsules`
+- **Body (JSON):**
+```json
+{
+  "message": "Hello future!",
+  "unlock_at": "2025-05-14T12:00:00Z"
+}
+```
+
+---
+
+### 5. Retrieve a Capsule
+
+- **Method:** `GET`
+- **URL:** `http://13.234.57.74:8000/capsules/{id}?code=UNLOCK_CODE`
+
+Replace `{id}` and `UNLOCK_CODE` with values from the creation response.
+
+---
+
+### 6. List Capsules
+
+- **Method:** `GET`
+- **URL:** `http://13.234.57.74:8000/capsules?page=1&limit=10`
+
+---
+
+### 7. Update Capsule
+
+- **Method:** `PUT`
+- **URL:** `http://13.234.57.74:8000/capsules/{id}?code=UNLOCK_CODE`
+- **Body (JSON):**
+```json
+{
+  "message": "Updated message",
+  "unlock_at": "2026-01-01T00:00:00Z"
+}
+```
+
+---
+
+### 8. Delete Capsule
+
+- **Method:** `DELETE`
+- **URL:** `http://13.234.57.74:8000/capsules/{id}?code=UNLOCK_CODE`
+
 ---
