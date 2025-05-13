@@ -23,10 +23,12 @@ const register = asyncHandler(async (req,res) =>{
     const userExists = await User.findOne({where:{email:userEmail}})
     if(userExists){
         res.status(400).json({"message": "User already exists try login instead of resgister"})
+        return;
     }
 
     if(userExists){
         res.status(400).json({"message": "User already exists try login instead of resgister"})
+        return;
     }
       
 
@@ -39,6 +41,7 @@ const register = asyncHandler(async (req,res) =>{
     }, secretKey, {expiresIn: '8h'})
 
     res.status(201).json({"message": "User successfully resgistered!", "accessToken":accessToken})
+    return;
 })
 
 // @description Login user
@@ -55,6 +58,7 @@ const login = asyncHandler(async (req,res) =>{
     const userExists = await User.findOne({where:{email:userEmail}})
     if(!userExists){
         res.status(403).json({"message": "User with the given email does not exists"})
+        return;
     }
 
     const accessToken = jwt.sign({
@@ -64,9 +68,11 @@ const login = asyncHandler(async (req,res) =>{
     const passwordMatch = await argon2.verify(userExists.password, userPassword)
     if(passwordMatch){
         res.status(201).json({"message": "User successfully loggedin!", "accessToken":accessToken});
+        return;
     }
     else{
         res.status(403).json({ "Message": "Password is wrong, please enter correct password" });
+        return;
     }
     
 })
