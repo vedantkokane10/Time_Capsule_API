@@ -11,6 +11,7 @@ const createCapsule = asyncHandler(async(req,res) =>{
     console.log(unlockTime)
     if(!messageText || !unlockTime){
         res.status(401).json({"message":"message and unlock_at is not provided"})
+        return;
     }
 
     
@@ -18,6 +19,7 @@ const createCapsule = asyncHandler(async(req,res) =>{
     const userEmail = req.user.email;
     const capsule = await Capsule.create({message:messageText, unlock_at:unlockTime, unlock_code:unlockCode,email:userEmail})
     res.status(201).json({"id":capsule.id, "unlock_code":capsule.unlock_code});
+    return;
 })
 
 
@@ -84,6 +86,7 @@ const listAllCapsules = (async(req,res) => {
     }))
 
     res.json({total:toalCount, page, capsules:data})
+    return;
 })
 
 // @description updating a  capsule
@@ -136,6 +139,7 @@ const deleteCapsule = (async(req,res) =>{
     const capsule = await Capsule.findOne({where:{id:capsuleId}, raw: false})
     if(!capsule){
         res.status(404).json({"message" : "Capsule with the given id not found"})
+        return;
     }
 
     const currentDate = new Date()
@@ -143,6 +147,7 @@ const deleteCapsule = (async(req,res) =>{
 
     if(currentDate >= unlockDate){
         res.status(403).json({"message" : "Capsule cannot be deleted as unlock time reached"})
+        return;
     }
 
     if(code !== capsule.unlock_code){
