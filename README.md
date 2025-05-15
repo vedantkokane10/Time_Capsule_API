@@ -122,7 +122,12 @@ npm install
 Create a `.env` file using `.env.example`:
 ```
 ACCESS_TOKEN_SECRET_KEY=your-secret-key
-DATABASE_URL=postgres://username:password@host:port/dbname
+DB_HOST=postgres://username:password@host:port/dbname
+DB_USER=
+DB_PORT=5432
+DB_PASSWORD=
+DB_NAME=
+NODE_ENV=test
 ```
 
 ### 4. Start the Server
